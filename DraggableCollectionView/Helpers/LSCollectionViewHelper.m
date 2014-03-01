@@ -251,6 +251,8 @@ typedef NS_ENUM(NSInteger, _ScrollingDirection) {
             self.layoutHelper.hideIndexPath = indexPath;
             self.layoutHelper.toIndexPath = indexPath;
             [self.collectionView.collectionViewLayout invalidateLayout];
+          
+            self.collectionView.userInteractionEnabled = NO;
         } break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
@@ -295,6 +297,8 @@ typedef NS_ENUM(NSInteger, _ScrollingDirection) {
             // Reset
             [self invalidatesScrollTimer];
             lastIndexPath = nil;
+          
+            self.collectionView.userInteractionEnabled = YES;
         } break;
         default: break;
     }
