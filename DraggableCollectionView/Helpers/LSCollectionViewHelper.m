@@ -380,35 +380,39 @@ typedef NS_ENUM(NSInteger, _ScrollingDirection) {
     CGSize frameSize = self.collectionView.bounds.size;
     CGSize contentSize = self.collectionView.contentSize;
     CGPoint contentOffset = self.collectionView.contentOffset;
+    UIEdgeInsets contentInset = self.collectionView.contentInset;
     CGFloat distance = self.scrollingSpeed / 60.f;
     CGPoint translation = CGPointZero;
+    
+    frameSize.width -= (contentInset.left + contentInset.right);
+    frameSize.height -= (contentInset.top + contentInset.bottom);
     
     switch(scrollingDirection) {
         case _ScrollingDirectionUp: {
             distance = -distance;
-            if ((contentOffset.y + distance) <= 0.f) {
-                distance = -contentOffset.y;
+            if ((contentOffset.y + contentInset.top + distance) <= 0.f) {
+                distance = -contentOffset.y - contentInset.top;
             }
             translation = CGPointMake(0.f, distance);
         } break;
         case _ScrollingDirectionDown: {
             CGFloat maxY = MAX(contentSize.height, frameSize.height) - frameSize.height;
-            if ((contentOffset.y + distance) >= maxY) {
-                distance = maxY - contentOffset.y;
+            if ((contentOffset.y  + contentInset.top + distance) >= maxY) {
+                distance = maxY - contentOffset.y - contentInset.top;
             }
             translation = CGPointMake(0.f, distance);
         } break;
         case _ScrollingDirectionLeft: {
             distance = -distance;
-            if ((contentOffset.x + distance) <= 0.f) {
-                distance = -contentOffset.x;
+            if ((contentOffset.x + contentInset.left + distance) <= 0.f) {
+                distance = -contentOffset.x - contentInset.left;
             }
             translation = CGPointMake(distance, 0.f);
         } break;
         case _ScrollingDirectionRight: {
             CGFloat maxX = MAX(contentSize.width, frameSize.width) - frameSize.width;
-            if ((contentOffset.x + distance) >= maxX) {
-                distance = maxX - contentOffset.x;
+            if ((contentOffset.x + contentInset.right + distance) >= maxX) {
+                distance = maxX - contentOffset.x - contentInset.right;
             }
             translation = CGPointMake(distance, 0.f);
         } break;
