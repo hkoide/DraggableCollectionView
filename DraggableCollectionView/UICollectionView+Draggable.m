@@ -20,6 +20,11 @@
     return helper;
 }
 
+- (void)finalize
+{
+  [[self getHelper] removeObserver];
+}
+
 - (BOOL)draggable
 {
     return [self getHelper].enabled;

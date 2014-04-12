@@ -9,6 +9,7 @@
 @interface LSCollectionViewHelper : NSObject <UIGestureRecognizerDelegate>
 
 - (id)initWithCollectionView:(UICollectionView *)collectionView;
+- (void)removeObserver;
 
 @property (nonatomic, readonly) UICollectionView *collectionView;
 @property (nonatomic, readonly) UIGestureRecognizer *longPressGestureRecognizer;
